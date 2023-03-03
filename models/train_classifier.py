@@ -42,7 +42,7 @@ def load_data(database_filepath):
     sql_url = 'sqlite:///'+ database_filepath
     table = os.path.basename(database_filepath)
     engine = create_engine(sql_url)
-    df = pd.read_sql_table(table, engine)
+    df = pd.read_sql_table('DisasterResponse.db', engine)
 
     X = df.message
     y = df[df.columns[4:]]
