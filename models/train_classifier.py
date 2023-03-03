@@ -165,9 +165,9 @@ def build_model():
             ])),
 
             ('starting_verb', StartingVerbExtractor()),
-            ('debug2', Debug())
+            ('debug2', Debug()),
             ('case_normalizer', CaseNormalizer()),
-            ('debug4', Debug())
+            ('debug3', Debug())
         ])),
     
         ('clf', MultiOutputClassifier(RandomForestClassifier()))
