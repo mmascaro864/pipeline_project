@@ -51,6 +51,14 @@ def load_data(database_filepath):
     
     return X, y, category_names
 
+class Debug(BaseEstimator, TransformerMixin):
+    def transform(self, X):
+        print(X.shape)
+        return X
+    
+    def fit(self, X, y = None, **fit_params):
+        return self 
+    
 class CaseNormalizer(BaseEstimator, TransformerMixin):
     '''
     CaseNormalizer class: 
@@ -151,11 +159,15 @@ def build_model():
             
             ('text_pipeline', Pipeline([
                 ('vect', CountVectorizer(tokenizer=tokenize)),
-                ('tfidf', TfidfTransformer())
+                ('debug', Debug()),
+                ('tfidf', TfidfTransformer()),
+                ('debug1', Debug())
             ])),
 
             ('starting_verb', StartingVerbExtractor()),
-            ('case_normalizer', CaseNormalizer())
+            ('debug2', Debug())
+            ('case_normalizer', CaseNormalizer()),
+            ('debug4', Debug())
         ])),
     
         ('clf', MultiOutputClassifier(RandomForestClassifier()))
