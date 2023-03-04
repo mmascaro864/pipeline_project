@@ -102,7 +102,10 @@ class StartingVerbExtractor(BaseEstimator, TransformerMixin):
         return self
 
     def transform(self, X):
+        import pdb
+        pdb.set_trace()
         X_tagged = pd.Series(X).apply(self.starting_verb)
+        print(X_tagged)
         return pd.DataFrame(X_tagged)
 
 def tokenize(text):
