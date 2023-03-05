@@ -78,7 +78,7 @@ class CaseNormalizer(BaseEstimator, TransformerMixin):
     
     def transform(self, X):
         X = pd.Series(X).apply(lambda x: x.lower().strip()).values
-        X = np.to_array(X)
+        X = np.toarray(X)
         return X
 
 class StartingVerbExtractor(BaseEstimator, TransformerMixin):
