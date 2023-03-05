@@ -107,7 +107,7 @@ class StartingVerbExtractor(BaseEstimator, TransformerMixin):
         pdb.set_trace()
         X_tagged = pd.Series(X).apply(self.starting_verb)
         X_tagged = pd.DataFrame(X_tagged)
-        X_tagged[0] = X_tagged[0].astype(int)
+        X_tagged['0'] = X_tagged['0'].astype(int)
         print(X_tagged.columns)
         
         return X_tagged
