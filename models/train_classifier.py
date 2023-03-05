@@ -77,11 +77,9 @@ class CaseNormalizer(BaseEstimator, TransformerMixin):
         return self
     
     def transform(self, X):
-        from sklearn.feature_extraction import DictVectorizer
-        vec = DictVectorizer
+        
         X = pd.Series(X).apply(lambda x: x.lower().strip()).values
-        X_vect = vec.fit_transform(X).toarray()
-        return X_vect
+        return X.toarray()
 
 class StartingVerbExtractor(BaseEstimator, TransformerMixin):
     '''
