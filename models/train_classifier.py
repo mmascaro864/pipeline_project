@@ -7,6 +7,7 @@ import sqlite3
 from sqlalchemy import create_engine
 import pickle as pk
 import nltk
+nltk.download(['punkt', 'wordnet', 'averaged_perceptron_tagger'])
 
 # import Natural Language Toolkit Libraries
 from nltk import pos_tag
@@ -105,8 +106,11 @@ class StartingVerbExtractor(BaseEstimator, TransformerMixin):
         import pdb
         pdb.set_trace()
         X_tagged = pd.Series(X).apply(self.starting_verb)
+        X_tagged = pd.DataFrame(X_tagged)
+        X_tagged[0] = X_tagged[0].astype(int)
         print(X_tagged)
-        return pd.DataFrame(X_tagged)
+        
+        return X_tagged
 
 def tokenize(text):
     '''
