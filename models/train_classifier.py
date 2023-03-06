@@ -23,8 +23,6 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 from sklearn.pipeline import Pipeline, FeatureUnion
 from sklearn.multioutput import MultiOutputClassifier
-from sklearn.base import BaseEstimator, TransformerMixin
-
 
 def load_data(database_filepath):
     '''
@@ -52,66 +50,7 @@ def load_data(database_filepath):
     category_names = y.columns
     
     return X, y, category_names
-
-class Debug(BaseEstimator, TransformerMixin):
-    def transform(self, X):
-        print(X.shape)
-        return X
     
-    def fit(self, X, y = None, **fit_params):
-        return self 
-    
-class CaseNormalizer(BaseEstimator, TransformerMixin):
-    '''
-    CaseNormalizer class: 
-        - Feature of machine learning pipeline model
-        - custom transformer that transforms a text array to lower case
-        and removes white space.
-
-        In: 
-            text array
-        Out: 
-            Pandas Series of transformed text
-    '''
-    def fit(self, X, y = None):
-        return self
-    
-    def transform(self, X):
-        return pd.Series(X).apply(lambda x: x.lower().strip()).values
-
-class StartingVerbExtractor(BaseEstimator, TransformerMixin):
-    '''
-    StartingVerbExtractor class:
-        - Feature of machine learning model pipeline
-        - Checks whether first word in sentence is a verb
-
-        In: 
-            text array
-        Out: 
-            Pandas DataFrame of tagged text
-    '''
-
-    def starting_verb(self, text):
-        sentence_list = sent_tokenize(text)
-        for sentence in sentence_list:
-            pos_tags = pos_tag(tokenize(sentence))
-            first_word, first_tag = pos_tags[0]
-            if first_tag in ['VB', 'VBP'] or first_word == 'RT':
-                return True
-        return False
-
-    def fit(self, x, y=None):
-        return self
-
-    def transform(self, X):
-        import pdb
-        pdb.set_trace()
-        X_tagged = pd.Series(X).apply(self.starting_verb)
-        X_tagged = pd.DataFrame(X_tagged)
-        X_tagged['message'] = X_tagged['message'].astype(int)
-        print(X_tagged)
-        return X_tagged
-
 def tokenize(text):
     '''
     tokenize:
@@ -133,19 +72,15 @@ def tokenize(text):
 
     # tokenize text
     tokens = word_tokenize(text)
-
-    # initate case_normalizer and normalize text
-    case_normalizer = CaseNormalizer()
-    normalized_tokens = case_normalizer.transform(tokens)
     
     # initiate lemmatizer
     lemmatizer = WordNetLemmatizer()
 
     # iterate through each token and lemmatize text
     clean_tokens = []
-    for token in normalized_tokens:
+    for token in tokens:
         
-        clean_token = lemmatizer.lemmatize(token)
+        clean_token = lemmatizer.lemmatize(token).lower().strip()
         clean_tokens.append(clean_token)
 
     return clean_tokens
