@@ -97,23 +97,12 @@ def build_model():
             Out: pipeline model
     '''
     pipeline = Pipeline([
-        ('features', FeatureUnion([
-            
-            ('text_pipeline', Pipeline([
-                ('vect', CountVectorizer(tokenizer=tokenize)),
-                ('debug', Debug()),
-                ('tfidf', TfidfTransformer()),
-                ('debug1', Debug())
+        ('text_pipeline', Pipeline([
+            ('vect', CountVectorizer(tokenizer=tokenize)),
+            ('tfidf', TfidfTransformer()),
+            ('clf', MultiOutputClassifier(RandomForestClassifier()))
             ])),
-
-            ('starting_verb', StartingVerbExtractor()),
-            ('debug2', Debug()),
-            ('case_normalizer', CaseNormalizer()),
-            ('debug3', Debug())
-        ])),
-    
-        ('clf', MultiOutputClassifier(RandomForestClassifier()))
-    ])
+        ])
     
     return pipeline
 
