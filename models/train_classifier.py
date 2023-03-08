@@ -8,7 +8,7 @@ import sqlite3
 from sqlalchemy import create_engine
 import pickle as pk
 import nltk
-nltk.download(['punkt', 'wordnet', 'averaged_perceptron_tagger'])
+#nltk.download(['punkt', 'wordnet', 'averaged_perceptron_tagger'])
 
 # import Natural Language Toolkit Libraries
 from nltk import pos_tag
@@ -19,10 +19,11 @@ from nltk.stem import WordNetLemmatizer
 # import scikit learn libraries
 from sklearn.metrics import confusion_matrix, classification_report
 from sklearn.model_selection import train_test_split, GridSearchCV
-from sklearn.ensemble import RandomForestClassifier
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
-from sklearn.pipeline import Pipeline, FeatureUnion
+from sklearn.pipeline import Pipeline
 from sklearn.multioutput import MultiOutputClassifier
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import AdaBoostClassifier
 
 def load_data(database_filepath):
     '''
@@ -55,6 +56,7 @@ def tokenize(text):
     '''
     tokenize:
         Split text into words, normalize case, reduce words to their root
+        
         In:
             text - message text from disaster dataset
         
@@ -97,30 +99,45 @@ def build_model():
             Out: pipeline model
     '''
     pipeline = Pipeline([
+        
         ('text_pipeline', Pipeline([
             ('vect', CountVectorizer(tokenizer=tokenize)),
             ('tfidf', TfidfTransformer()),
-            ('clf', MultiOutputClassifier(RandomForestClassifier()))
-            ])),
-        ])
+            ('clf', MultiOutputClassifier(AdaBoostClassifier(
+                    DecisionTreeClassifier(max_depth = 2), 
+                        n_estimators = 10, learning_rate = 1)))
+        ]))
+    ])
     
     return pipeline
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
     '''
-    
+        evaluate_model:
+            - Receives fitted model, makes predictions over test dataset, 
+            determines overall model accuracy, and outputs classification report
+
+            In:
+                - model: NLP ML pipeline model
+                - X_test: disaster repsonse messages
+                - Y_test: message labels
+                - category_names: list of category (column) names
+
+            Out:
+                - Screen print:
+                    - model accuracy
+                    - Classification report
     '''
     # model accuracy
     y_pred = model.predict(X_test)
-    accuracy = (y_pred == Y_test).mean()
     overall_accuracy = (y_pred == Y_test).mean().mean()
-    print('Model accuracy by category:\n {}'.format(accuracy))
     print('\nOverall model accuracy: {}'.format(overall_accuracy))
 
     # classification report
     report = classification_report(Y_test, y_pred, target_names=category_names, output_dict = True)
     df_class_rpt = pd.DataFrame(report).transpose()
+    print('\nClassification Report:\n')
     print(df_class_rpt)
     
     return
@@ -128,6 +145,15 @@ def evaluate_model(model, X_test, Y_test, category_names):
 
 def save_model(model, model_filepath):
     '''
+        save_model:
+            - saves fitted, trained model
+
+            In:
+                - model: fitted, trained model
+                - model_filepath
+                
+            Out:
+                - path to model saved as pickle file
     '''
     pk.dump(model, open(model_filepath, "wb"))
 
