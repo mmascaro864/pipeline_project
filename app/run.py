@@ -44,9 +44,22 @@ def index():
     genre_names = list(genre_counts.index)
 
     # get columns with numeric data
-    numeric_df = df.drop(['id', 'message', 'original', 'genre'], axis=1).sum().reset_index()
-    numeric_df.columns.values[0] = 'category'
-    numeric_df.columns.values[1] = 'count'
+    numeric_df = df.drop(['id', 'message', 'original', 'genre'], axis=1)
+    numeric_sum = numeric_df.sum(numeric_only = True)
+
+    # create dataframe from series
+    numeric_sum_df = numeric_sum.to_frame()
+    
+    # reset index and rename columns
+    numeric_sum_df.reset_index(inplace=True)
+    numeric_sum_df = numeric_sum_df.rename(columns = {'index':'category', 0: 'count'})
+
+    # sort dataframe by count, descending
+    numeric_sum_df = numeric_sum_df.sort_values(by = 'count', ascending = False)
+
+    # get top and bottom ten categories in terms of message count
+    top_ten = numeric_sum_df[0:10]
+    bottom_ten = numeric_sum_df[-11:]
     
     # create visuals
     # TODO: Below is an example - modify to create your own visuals
@@ -72,8 +85,8 @@ def index():
         {
             'data': [
                 Bar(
-                    x = numeric_df['category'],
-                    y = numeric_df['count'].nlargest(10)
+                    x = top_ten['category'],
+                    y = top_ten['count']
                 )
             ],
 
@@ -84,6 +97,24 @@ def index():
                 },
                 'xaxis': {
                     'title': 'Categories - Top 10'
+                }
+            }
+        },
+        {
+            'data': [
+                Bar(
+                    x = bottom_ten['category'],
+                    y = bottom_ten['count']
+                )
+            ],
+
+            'layout': {
+                'title': 'Distribution of Message Categories - Bottom 10',
+                'yaxis': {
+                    'title': 'Frequency'
+                },
+                'xaxis': {
+                    'title': 'Categories - Bottom 10'
                 }
             }
         }
