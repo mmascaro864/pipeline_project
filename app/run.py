@@ -62,7 +62,11 @@ def index():
     bottom_ten = numeric_sum_df[-11:]
     
     # create visuals
-    # TODO: Below is an example - modify to create your own visuals
+    # three graphs:
+    #   1) Distribution of message genres
+    #   2) Distribution of message categories (top 10)
+    #   3) Distribution of message categories (bottom 10)
+    
     graphs = [
         {
             'data': [
