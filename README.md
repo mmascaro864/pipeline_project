@@ -5,6 +5,7 @@
 #### March 2023
 
 ## Libraries Used
+- Project uses Python 3.9, Anaconda distribution
 
 | Standard   | Natural Language Toolkit  | Sci-kit Learn          |
 | -----------|:-------------------------:| ----------------------:|
@@ -18,5 +19,14 @@
 | flask      |                           | AdaBoostClassifier     |
 | plotly     |                           |                        |
 
+## Code directory structure
+#### data
+- **disaster_messages.csv** - 
+- **disaster_categories.csv** -
+- **process_data.csv** - ETL pipeline that ingests and transforms disaster message and response data, and loads transformed data into a sqlite database
+- **DisasterResponse.db** - output from ETL phase
 
+#### models
+
+#### app
 
