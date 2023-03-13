@@ -1,5 +1,5 @@
 # Disaster Response Pipeline Project
-This project leverages disaster response data provided by [Appen] (https://appen.com/)(formerly Figure8). The dataset contains pre-labeled tweets and messages from disaster events. An ETL pipeline is built to read in and transform the data sets, and loads the transformed data into a sqlite database. A natural language processing ML pipeline is fitted and trained to assist with classifiying the disaster response messages. Finally, a Flask app is used to (a) display plots related to message genre and categorization, and (b) to classifiy disaster repsonse messages in real time.
+This project leverages disaster response data provided by [Appen (formerly Figure8)] (https://appen.com/). The dataset contains pre-labeled tweets and messages from disaster events. An ETL pipeline is built to read in and transform the data sets, and loads the transformed data into a sqlite database. A natural language processing ML pipeline is fitted and trained to assist with classifiying the disaster response messages. Finally, a Flask app is used to (a) display plots related to message genre and categorization, and (b) to classifiy disaster repsonse messages in real time.
 
 ## Udacity Data Science Nanodegree Project
 #### Marc Mascaro
