@@ -1,5 +1,5 @@
 # Disaster Response Pipeline Project
-This project leverages disaster response data provided by [Appen](https://appen.com/). The dataset contains pre-labeled tweets and messages from disaster events. An ETL pipeline is built to read in and transform the data sets, and loads the transformed data into a sqlite database. A natural language processing ML pipeline is fitted and trained to assist with classifiying the disaster response messages. Finally, a Flask app is used to (a) display plots related to message genre and categorization, and (b) to classifiy disaster repsonse messages in real time.
+This project leverages disaster response data provided by [appen](https://appen.com/) (formerly Figure8). The dataset contains pre-labeled tweets and messages from disaster events. An ETL pipeline is built to read in and transform the data sets, and loads the transformed data into a sqlite database. A natural language processing ML pipeline is fitted and trained to assist with classifiying the disaster response messages. Finally, a Flask app is used to (a) display plots related to message genre and categorization, and (b) to classifiy disaster repsonse messages in real time.
 
 ## Udacity Data Science Nanodegree Project
 
@@ -42,3 +42,9 @@ This project leverages disaster response data provided by [Appen](https://appen.
 2. **ML Pipeline** - to run the ML pipeline from the **models** directory, enter: `python train_classifier.py ../data/DisasterResponse.db classifier.pkl`
 3. **Web Page** - to render the web page, from the **app** directory, enter: `python run.py`. When prompted, point your browser to: http://0.0.0.0:3001/ or http://localhost:3001/.
 
+## Installation
+Clone git repository: `git clone https://github.com/mmascaro864/pipeline_project.git`
+
+## Acknowledgements
+- [Udacity](https://www.udacity.com/) - Data Science Nanodegree Program
+- [appen](https://appen.com/) - Appen, formerly Figure8, provider of reliable training data, for providing the data sets for this project
