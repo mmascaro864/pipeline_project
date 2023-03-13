@@ -25,7 +25,7 @@ This project leverages disaster response data provided by [Appen] (https://appen
 #### data
 - **disaster_messages.csv** - disaster messages and message genre
 - **disaster_categories.csv** - disater message categories
-- **process_data.csv** - ETL pipeline that ingests and transforms disaster message and category data, and loads transformed data into a sqlite database
+- **process_data.py** - ETL pipeline that ingests and transforms disaster message and category data, and loads transformed data into a sqlite database
 - **DisasterResponse.db** - output from ETL phase
 
 #### models
@@ -33,7 +33,12 @@ This project leverages disaster response data provided by [Appen] (https://appen
 - **classifier.pkl** - fitted, trained NLP  ML pipeline model
 
 #### app
-- **run.py** -
-- **master.html** -
-- **go.html** -
+- **run.py** -  Flask app that renders visualizations based on message data stored in sqlite database, and loads saved NLP ML pipeline model to classify disaster reponse messages entered via web page.
+- **master.html** - web page renders plotly visualizations and accepts disaster response messages as user input
+- **go.html** - web page that displays disaster repsonse message classification based on user input into master.html form
+
+## Project Execution
+1. **ETL Pipeline** - to run the ETL pipeline from the **data** directory, enter: `python process_data.py disaster_messages.csv disaster_categories.csv DisasterResponse.db`
+2. **ML Pipeline** - to run the ML pipeline from the **models** directory, enter: `python train_classifier.py ../data/DisasterResponse.db classifier.pkl`
+3. **Web Page** - to render the web page, from the **app** directory, enter: `python run.py`. When prompted, point your browser to: http://0.0.0.0:3001/ or http://localhost:3001/.
 
