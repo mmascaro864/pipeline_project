@@ -29,8 +29,11 @@ This project leverages disaster response data provided by [Appen] (https://appen
 - **DisasterResponse.db** - output from ETL phase
 
 #### models
-- **train_classifier.py** - 
+- **train_classifier.py** - reads in the saved sqlite database file; build NLP ML pipeline to train classifier model
 - **classifier.pkl** - fitted, trained NLP  ML pipeline model
 
 #### app
+- **run.py** -
+- **master.html** -
+- **go.html** -
 
